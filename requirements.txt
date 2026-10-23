@@ -1,0 +1,4 @@
+Flask>=3.0,<4.0
+redis>=5.0,<7.0
+concurrent-log-handler>=0.9.25,<1.0
+gunicorn>=22.0,<24.0

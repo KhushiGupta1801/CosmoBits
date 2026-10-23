@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Auto Blocker Demo</title>
+  <style>
+    :root { font-family: ui-sans-serif, system-ui, sans-serif; color: #172033; background: #f5f7fb; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 980px; margin: 0 auto; padding: 48px 24px 72px; }
+    h1 { margin: 0 0 8px; font-size: 32px; }
+    .intro { margin: 0 0 32px; color: #566176; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+    section { padding: 20px; border: 1px solid #d9deea; border-radius: 8px; background: #fff; }
+    h2 { margin: 0 0 14px; font-size: 18px; }
+    label { display: block; margin: 12px 0 5px; font-size: 14px; font-weight: 600; }
+    input, textarea { width: 100%; padding: 10px 12px; border: 1px solid #aeb8c9; border-radius: 5px; font: inherit; }
+    textarea { min-height: 84px; resize: vertical; }
+    button { margin-top: 14px; border: 0; border-radius: 999px; padding: 10px 18px; color: white; background: #286bfa; font: inherit; font-weight: 650; cursor: pointer; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #91b7ff; outline-offset: 2px; }
+    .trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    #result { min-height: 24px; margin: 20px 0 0; color: #46546c; }
+    #security-info { margin-top: 36px; color: #566176; }
+    @media (prefers-color-scheme: dark) {
+      :root { color: #eef2fa; background: #151923; }
+      .intro, #security-info, #result { color: #b2bdd0; }
+      section { border-color: #394152; background: #202633; }
+      input, textarea { color: #eef2fa; border-color: #586275; background: #171d27; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Auto Blocker</h1>
+    <p class="intro">Example sensitive routes protected by server-side checks.</p>
+    <div class="grid">
+      <section>
+        <h2>Login</h2>
+        <form action="/api/login" method="post" data-api-form data-token-form>
+          <label for="login-user">Username</label><input id="login-user" name="username" autocomplete="username" required>
+          <label for="login-password">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          <input type="hidden" name="form_token">
+          <label class="trap" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Sign in</button>
+        </form>
+      </section>
+      <section>
+        <h2>Signup</h2>
+        <form action="/api/signup" method="post" data-api-form data-token-form>
+          <label for="signup-email">Email</label><input id="signup-email" name="email" type="email" required>
+          <input type="hidden" name="form_token">
+          <label class="trap" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Create account</button>
+        </form>
+      </section>
+      <section>
+        <h2>Contact</h2>
+        <form action="/api/contact" method="post" data-api-form data-token-form>
+          <label for="contact-message">Message</label><textarea id="contact-message" name="message" required></textarea>
+          <input type="hidden" name="form_token">
+          <label class="trap" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Send message</button>
+        </form>
+      </section>
+      <section>
+        <h2>Comment</h2>
+        <form action="/api/comments" method="post" data-api-form data-token-form>
+          <label for="comment-message">Comment</label><textarea id="comment-message" name="comment" required></textarea>
+          <input type="hidden" name="form_token">
+          <label class="trap" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Post comment</button>
+        </form>
+      </section>
+      <section>
+        <h2>File upload</h2>
+        <form action="/api/upload" method="post" enctype="multipart/form-data" data-api-form data-token-form>
+          <label for="upload-file">JPG, PNG, or PDF, up to 5 MB</label>
+          <input id="upload-file" name="file" type="file" accept=".jpg,.jpeg,.png,.pdf" required data-file-check>
+          <input type="hidden" name="form_token">
+          <label class="trap" aria-hidden="true">Leave blank<input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Upload file</button>
+        </form>
+      </section>
+    </div>
+    <p id="result" role="status" aria-live="polite"></p>
+    <p id="security-info">Auto Blocker rejects requests that exceed limits or fail server-side validation. Contact the site administrator if you believe your request was blocked by mistake.</p>
+  </main>
+  <script>
+    (() => {
+      const shield = `<svg viewBox="0 0 112 112" aria-hidden="true" focusable="false">
+        <defs><clipPath id="shield-shape"><path d="M56 22 83 32v23c0 20-12 33-27 42-15-9-27-22-27-42V32z"/></clipPath></defs>
+        <path d="M56 22 83 32v23c0 20-12 33-27 42-15-9-27-22-27-42V32z" fill="#fff"/>
+        <g clip-path="url(#shield-shape)">
+          <path d="M30 20h26v36H30z" fill="#fff"/>
+          <path d="M56 20h28v36H56z" fill="#9CC9FF"/>
+          <path d="M30 56h26v38H30z" fill="#7FB5FF"/>
+          <path d="M56 56h28v38H56z" fill="#F7FAFF"/>
+        </g>
+        <path d="M56 22 83 32v23c0 20-12 33-27 42-15-9-27-22-27-42V32z" fill="none" stroke="#fff" stroke-width="2"/>
+      </svg>`;
+
+      function BlockedScreen({ reason, retryAfter }) {
+        const overlay = document.createElement("div");
+        overlay.className = "auto-blocker-overlay";
+        overlay.setAttribute("role", "alert");
+        overlay.setAttribute("aria-live", "assertive");
+        overlay.innerHTML = `
+          <style>
+            .auto-blocker-overlay { position: fixed; z-index: 2147483647; inset: 0; display: grid; place-items: center; padding: 24px; color: #111318; background: #F2F2F2; font-family: ui-sans-serif, system-ui, sans-serif; animation: ab-fade .24s ease-out both; }
+            .auto-blocker-content { width: min(100%, 520px); text-align: center; animation: ab-scale .32s cubic-bezier(.2,.8,.2,1) both; }
+            .auto-blocker-icon { display: grid; place-items: center; width: 112px; height: 112px; margin: 0 auto 28px; border-radius: 30px; background: linear-gradient(160deg,#2B7BFF,#2540FF); box-shadow: 0 12px 28px #2540ff30; }
+            .auto-blocker-icon svg { width: 84px; height: 84px; }
+            .auto-blocker-content h1 { margin: 0 0 12px; font-size: clamp(28px, 6vw, 40px); line-height: 1.12; }
+            .auto-blocker-reason { margin: 0 auto 26px; max-width: 42ch; color: #555b66; line-height: 1.55; }
+            .auto-blocker-actions { display: flex; justify-content: center; align-items: center; gap: 24px; }
+            .auto-blocker-actions button, .auto-blocker-actions a { min-height: 46px; border: 0; font: inherit; font-weight: 650; cursor: pointer; }
+            .auto-blocker-back { padding: 0 25px; border-radius: 999px; color: white; background: #286bfa; }
+            .auto-blocker-learn { padding: 0; color: #214fc4; background: transparent; text-decoration: none; }
+            .auto-blocker-actions button:focus-visible, .auto-blocker-actions a:focus-visible { outline: 3px solid #154fd8; outline-offset: 3px; }
+            @keyframes ab-fade { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes ab-scale { from { opacity: .65; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+            @media (prefers-reduced-motion: reduce) { .auto-blocker-overlay, .auto-blocker-content { animation: none; } }
+            @media (prefers-color-scheme: dark) { .auto-blocker-overlay { color: #f6f7fb; background: #171a21; } .auto-blocker-reason { color: #c0c5d0; } .auto-blocker-learn { color: #9ec0ff; } }
+          </style>
+          <div class="auto-blocker-content">
+            <div class="auto-blocker-icon">${shield}</div>
+            <h1>Blocked by Auto Blocker</h1>
+            <p class="auto-blocker-reason"></p>
+            <div class="auto-blocker-actions">
+              <button class="auto-blocker-back" type="button">Go back</button>
+              <a class="auto-blocker-learn" href="/#security-info">Learn more</a>
+            </div>
+          </div>`;
+        overlay.querySelector(".auto-blocker-reason").textContent = reason || "This request could not be completed.";
+        const back = overlay.querySelector(".auto-blocker-back");
+        back.addEventListener("click", () => {
+          if (window.history.length > 1) window.history.back();
+          else window.location.assign("/");
+        });
+        if (Number.isFinite(Number(retryAfter)) && Number(retryAfter) > 0) {
+          let remaining = Math.ceil(Number(retryAfter));
+          const updateCountdown = () => {
+            overlay.querySelector(".auto-blocker-reason").textContent =
+              `${reason || "This request could not be completed."} Try again in ${remaining} seconds.`;
+            if (remaining > 0) remaining -= 1;
+            else window.clearInterval(timer);
+          };
+          updateCountdown();
+          const timer = window.setInterval(updateCountdown, 1000);
+        }
+        document.body.append(overlay);
+        back.focus();
+      }
+
+      window.BlockedScreen = BlockedScreen;
+      const nativeFetch = window.fetch.bind(window);
+      window.fetch = async (...args) => {
+        const response = await nativeFetch(...args);
+        if (response.status === 403 || response.status === 429) {
+          const payload = await response.clone().json().catch(() => null);
+          BlockedScreen(payload?.blocked ? payload : {
+            reason: "This request was denied by the server.",
+            retryAfter: response.headers.get("Retry-After"),
+          });
+        }
+        return response;
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const result = document.querySelector("#result");
+        for (const form of document.querySelectorAll("form[data-token-form]")) {
+          try {
+            const response = await fetch("/api/form-token");
+            const { token } = await response.json();
+            form.elements.form_token.value = token;
+          } catch {
+            result.textContent = "Could not prepare the form. Refresh and try again.";
+          }
+        }
+        document.querySelector("[data-file-check]").addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+          const allowed = /\.(jpg|jpeg|png|pdf)$/i.test(file.name);
+          if (!allowed || file.size > 5 * 1024 * 1024) {
+            event.target.value = "";
+            result.textContent = "Choose a JPG, PNG, or PDF file no larger than 5 MB.";
+          } else {
+            result.textContent = "";
+          }
+        });
+        document.querySelectorAll("form[data-api-form]").forEach((form) => {
+          form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            result.textContent = "";
+            const body = new FormData(form);
+            try {
+              const response = await fetch(form.action, { method: "POST", body });
+              const payload = await response.json().catch(() => ({}));
+              if (!payload.blocked) result.textContent = payload.message || payload.error || "Request completed.";
+            } catch {
+              result.textContent = "The request could not be completed.";
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
