@@ -1,4 +1,4 @@
-"""Cosmo Bites — Dedicated International Space Station (ISS) Service.
+"""CosmoBits — Dedicated International Space Station (ISS) Service.
 
 Provides real-time telemetry, coordinates, velocity, altitude, and crew status
 from Open-Notify, Where The ISS At (WTIA), and SGP4 TLE orbital backup.
@@ -46,7 +46,7 @@ def get_live_iss_telemetry() -> dict[str, Any]:
     # Try Where The ISS At API first (provides velocity and altitude directly)
     try:
         url = f"https://api.wheretheiss.at/v1/satellites/{ISS_NORAD_ID}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Cosmo Bites/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "CosmoBits/1.0"})
         with urllib.request.urlopen(req, timeout=3.0) as resp:
             raw = json.loads(resp.read().decode("utf-8"))
             lat = float(raw["latitude"])
@@ -80,7 +80,7 @@ def get_live_iss_telemetry() -> dict[str, Any]:
     # Try Open-Notify ISS-Now API
     try:
         url = "http://api.open-notify.org/iss-now.json"
-        req = urllib.request.Request(url, headers={"User-Agent": "Cosmo Bites/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "CosmoBits/1.0"})
         with urllib.request.urlopen(req, timeout=3.0) as resp:
             raw = json.loads(resp.read().decode("utf-8"))
             if raw.get("message") == "success":
@@ -159,7 +159,7 @@ def get_humans_in_space() -> list[dict]:
     """Fetch astronauts and cosmonauts currently aboard space stations."""
     try:
         url = "http://api.open-notify.org/astros.json"
-        req = urllib.request.Request(url, headers={"User-Agent": "Cosmo Bites/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": "CosmoBits/1.0"})
         with urllib.request.urlopen(req, timeout=3.0) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             if data.get("message") == "success":

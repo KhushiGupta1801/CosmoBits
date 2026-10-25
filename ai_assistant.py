@@ -1,4 +1,4 @@
-"""Cosmo Bites — Aerospace AI Assistant & Knowledge Chat Page."""
+"""CosmoBits — Aerospace AI Assistant & Knowledge Chat Page."""
 from __future__ import annotations
 
 import os
@@ -8,24 +8,30 @@ from services.ai_service import get_configured_ai_provider, query_ai_assistant
 
 def render_ai_assistant() -> None:
     """Render the AI aerospace mission control chat interface."""
-    st.markdown("## 🤖 Cosmo Bites — Aerospace AI Assistant")
+    st.markdown("## 🤖 CosmoBits Mission Assistant")
     st.caption("Consult your AI specialist on orbital mechanics, satellite telemetry, Kessler Syndrome, and space weather.")
 
     provider, api_key = get_configured_ai_provider()
 
     # Provider & Setup Banner
     if provider:
-        st.success(f"🟢 **Online AI Connected**: Active Engine: **{provider.upper()}** (API Key loaded from environment/settings).")
+        st.success(f"🟢 **Online AI Connected**: Active Engine: **{provider.upper()}** (API Key loaded from environment).")
     else:
         with st.expander("ℹ️ **AI API Configuration Guide (Optional)**", expanded=False):
             st.markdown(
-                """Cosmo Bites is currently running in **Educational Offline Knowledge Mode**.
-You can ask questions about orbital mechanics, Keplerian elements, TLE formats, space weather, and collision avoidance.
+                """
+                CosmoBits is currently running in **Educational Offline Knowledge Mode**.
+                You can ask questions about orbital mechanics, Keplerian elements, TLE formats, space weather, and the ISS.
 
-#### How to Enable Live Google Gemini AI:
-1. Navigate to the **⚙️ Settings** page in the sidebar.
-2. Enter your Gemini API key under the **AI Space Engine** tab and click **Save**.
-3. The AI assistant will immediately switch to live online LLM mode."""
+                #### How to Enable Live Google Gemini AI:
+                1. Get a free API key at [Google AI Studio](https://aistudio.google.com/app/apikey).
+                2. Set the environment variable in your terminal or in `.env`:
+                   ```bash
+                   export GEMINI_API_KEY="your_api_key_here"
+                   ```
+                   *Or create a `.env` file in the project folder with `GEMINI_API_KEY=your_key`.*
+                3. Restart the Streamlit application.
+                """
             )
 
     # Initialize chat history
@@ -34,9 +40,9 @@ You can ask questions about orbital mechanics, Keplerian elements, TLE formats, 
             {
                 "role": "assistant",
                 "content": (
-                    "Greetings! I am **Cosmo Bites**, your aerospace mission control AI assistant. "
+                    "Greetings! I am **CosmoBits**, your aerospace mission assistant. "
                     "Ask me anything about orbital mechanics, satellite constellations, "
-                    "solar weather impacts, collision avoidance maneuvers, or space debris mitigation."
+                    "solar weather impacts, or space debris mitigation."
                 ),
             }
         ]

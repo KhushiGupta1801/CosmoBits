@@ -1,4 +1,4 @@
-"""Cosmo Bites — Interactive 3D Earth & Orbital Constellation Globe."""
+"""CosmoBits — Interactive 3D Earth & Orbital Constellation Globe."""
 from __future__ import annotations
 
 import numpy as np
@@ -12,7 +12,7 @@ from services.tle_service import CATALOGS, get_space_objects
 
 def render_globe_3d() -> None:
     """Render the full interactive 3D Earth globe with real satellite positions and orbits."""
-    st.markdown("## 🌐 3D Earth View & Orbital Globe")
+    st.markdown("## 🌐 Interactive 3D Orbital Globe")
     st.caption("Rotate, zoom, and inspect real-time satellite positions and orbital trajectories in 3D ECEF space.")
 
     # Controls row
@@ -67,15 +67,15 @@ def render_globe_3d() -> None:
             x=x_earth,
             y=y_earth,
             z=z_earth,
-            colorscale=[[0, "#030611"], [0.5, "#081329"], [1, "#0D2244"]],
+            colorscale=[[0, "#050B18"], [0.5, "#0A192F"], [1, "#0F2847"]],
             showscale=False,
-            opacity=0.92,
+            opacity=0.88,
             hoverinfo="skip",
             name="Earth (WGS-84)",
         )
     )
 
-    # Equator Wireframe Ring
+    # Equator & Prime Meridian Wireframe Rings
     eq_phi = np.linspace(0, 2 * np.pi, 100)
     fig.add_trace(
         go.Scatter3d(
@@ -83,7 +83,7 @@ def render_globe_3d() -> None:
             y=(r_earth + 20) * np.sin(eq_phi),
             z=np.zeros_like(eq_phi),
             mode="lines",
-            line=dict(color="rgba(0, 210, 255, 0.4)", width=2),
+            line=dict(color="rgba(0, 245, 212, 0.35)", width=2),
             name="Equator",
             hoverinfo="skip",
         )
@@ -92,10 +92,10 @@ def render_globe_3d() -> None:
     # 2. Add Satellites grouped by catalog
     catalogs_present = set(o["catalog"] for o in objects)
     color_map = {
-        "stations": "#00D2FF",
-        "visual": "#38BDF8",
-        "weather": "#60A5FA",
-        "gps-ops": "#818CF8",
+        "stations": "#00F5D4",
+        "visual": "#00D2FF",
+        "weather": "#4DD0E1",
+        "gps-ops": "#9D4EDD",
         "science": "#34D399",
         "last-30-days": "#FFB703",
         "analyst": "#EF233C",
@@ -109,6 +109,7 @@ def render_globe_3d() -> None:
         xs, ys, zs, texts, hovers = [], [], [], [], []
 
         for o in cat_objs:
+            # Recompute scaled XYZ if exaggeration requested
             if scale_alt and o["alt_km"] > 0:
                 scale_factor = (WGS84_A + o["alt_km"] * alt_mult) / (WGS84_A + o["alt_km"])
                 xs.append(o["x"] * scale_factor)
@@ -135,7 +136,7 @@ def render_globe_3d() -> None:
                 mode="markers",
                 marker=dict(
                     size=4 if cat != "stations" else 7,
-                    color=color_map.get(cat, "#00D2FF"),
+                    color=color_map.get(cat, "#00F5D4"),
                     opacity=0.9,
                 ),
                 name=cat.upper(),
@@ -155,6 +156,7 @@ def render_globe_3d() -> None:
                 orb_z = [pt["z"] for pt in track]
 
                 if scale_alt:
+                    # Apply altitude scaling to orbit track
                     for i, pt in enumerate(track):
                         if pt["alt_km"] > 0:
                             sf = (WGS84_A + pt["alt_km"] * alt_mult) / (WGS84_A + pt["alt_km"])
@@ -168,7 +170,7 @@ def render_globe_3d() -> None:
                         y=orb_y,
                         z=orb_z,
                         mode="lines",
-                        line=dict(color="#00D2FF", width=4),
+                        line=dict(color="#FF007F", width=4),
                         name=f"Orbit: {selected_obj['name']}",
                         hoverinfo="skip",
                     )
@@ -192,7 +194,7 @@ def render_globe_3d() -> None:
             y=[sel_y],
             z=[sel_z],
             mode="markers+text",
-            marker=dict(size=10, color="#38BDF8", symbol="diamond", line=dict(color="#FFFFFF", width=2)),
+            marker=dict(size=10, color="#FF007F", symbol="diamond", line=dict(color="#FFFFFF", width=2)),
             text=[f"  ★ {selected_obj['name']}"],
             textposition="top center",
             name="Selected Target",
@@ -204,13 +206,13 @@ def render_globe_3d() -> None:
     # Layout Configuration
     fig.update_layout(
         template="plotly_dark",
-        paper_bgcolor="#050811",
+        paper_bgcolor="#070B14",
         scene=dict(
             xaxis=dict(showgrid=False, showticklabels=False, title="", visible=False),
             yaxis=dict(showgrid=False, showticklabels=False, title="", visible=False),
             zaxis=dict(showgrid=False, showticklabels=False, title="", visible=False),
             aspectmode="data",
-            bgcolor="#050811",
+            bgcolor="#070B14",
         ),
         margin=dict(l=0, r=0, t=10, b=10),
         height=680,
@@ -226,7 +228,7 @@ def render_globe_3d() -> None:
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Technical note on propagation
+    # Technical note on propagation and honesty
     st.info(
         f"**SGP4 Ephemeris Propagation**: Satellite vectors are computed in TEME coordinates "
         f"and converted to ECEF (Earth-Centered Earth-Fixed) using Greenwich Mean Sidereal Time (GMST). "

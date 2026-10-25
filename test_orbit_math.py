@@ -1,4 +1,4 @@
-"""Unit tests for Cosmo Bites orbital calculations & geodetics."""
+"""Unit tests for CosmoBits orbital calculations & geodetics."""
 from __future__ import annotations
 
 import unittest

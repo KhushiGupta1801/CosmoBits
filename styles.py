@@ -1,4 +1,4 @@
-"""Cosmo Bites — CSS Injection & UI Theming Utility."""
+"""CosmoBits — CSS Injection & UI Theming Utility."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -12,4 +12,12 @@ def inject_custom_css() -> None:
         css_content = css_path.read_text(encoding="utf-8")
         st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
     else:
-        st.markdown("<style>.stApp { background-color: #050811; color: #F1F5F9; }</style>", unsafe_allow_html=True)
+        # Fallback minimal CSS
+        st.markdown(
+            """
+            <style>
+            .stApp { background-color: #070B14; color: #F1F5F9; }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )

@@ -1,4 +1,4 @@
-"""Cosmo Bites — Core Orbital Mechanics & Geodetic Services.
+"""CosmoBits — Core Orbital Mechanics & Geodetic Services.
 
 Orbital conversions, circular-orbit generation, topocentric horizon passes,
 and trajectory geometry. Implements WGS-84 ellipsoid and TEME/ECEF transformations.

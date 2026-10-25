@@ -1,4 +1,4 @@
-"""Cosmo Bites — AI Space Assistant & Orbital Knowledge Engine.
+"""CosmoBits — AI Space Assistant & Orbital Knowledge Engine.
 
 Supports real-time LLM inference via Google Gemini API / OpenAI API
 with an extensive built-in educational space mechanics knowledge engine
@@ -13,7 +13,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 
-SYSTEM_PROMPT = """You are Cosmo Bites, an expert aerospace mission control AI assistant specializing in:
+SYSTEM_PROMPT = """You are CosmoBits, an expert aerospace mission control AI assistant specializing in:
 - Satellite tracking, NORAD catalogs, and TLE formats
 - Orbital mechanics (Kepler's laws, SGP4/SDP4, Hohmann transfers, delta-v, perturbations J2/drag)
 - Space weather and its impact on satellites (solar flares, geomagnetic storms, Kp index, thermospheric expansion)
@@ -43,17 +43,17 @@ def query_ai_assistant(prompt: str, conversation_history: list[dict] | None = No
             return call_gemini_api(prompt, api_key, conversation_history), "Google Gemini 1.5 Flash (Online)"
         except Exception as e:
             fallback = offline_knowledge_engine(prompt)
-            return f"*(Gemini API encountered an error: {e}. Switching to offline knowledge engine)*\n\n{fallback}", "Cosmo Bites Knowledge Engine (Fallback)"
+            return f"*(Gemini API encountered an error: {e}. Switching to offline knowledge engine)*\n\n{fallback}", "CosmoBits Knowledge Engine (Fallback)"
 
     if provider == "openai" and api_key:
         try:
             return call_openai_api(prompt, api_key, conversation_history), "OpenAI GPT-4o (Online)"
         except Exception as e:
             fallback = offline_knowledge_engine(prompt)
-            return f"*(OpenAI API encountered an error: {e}. Switching to offline knowledge engine)*\n\n{fallback}", "Cosmo Bites Knowledge Engine (Fallback)"
+            return f"*(OpenAI API encountered an error: {e}. Switching to offline knowledge engine)*\n\n{fallback}", "CosmoBits Knowledge Engine (Fallback)"
 
     # Educational offline fallback
-    return offline_knowledge_engine(prompt), "Cosmo Bites Educational Knowledge Engine (Offline Mode)"
+    return offline_knowledge_engine(prompt), "CosmoBits Educational Knowledge Engine (Offline Mode)"
 
 
 def call_gemini_api(prompt: str, api_key: str, history: list[dict] | None = None) -> str:
@@ -229,7 +229,7 @@ A **Hohmann Transfer** is the most fuel-efficient two-impulse orbital maneuver b
 - **Microgravity Science**: Serves as a continuous human-tended laboratory for crystallization, combustion physics, fluid dynamics, and biological effects of long-duration spaceflight."""
 
     else:
-        return f"""### 🌌 Cosmo Bites Mission Assistant
+        return f"""### 🌌 CosmoBits Mission Assistant
 
 I received your inquiry regarding **"{query}"**. 
 

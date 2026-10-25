@@ -1,21 +1,20 @@
-"""Cosmo Bites — Satellite Tracking & Ephemeris Inspector Page."""
+"""CosmoBits — Satellite Tracking & Ephemeris Inspector Page."""
 from __future__ import annotations
 
-import textwrap
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 from sgp4.api import Satrec
 
-from components.cards import render_html, render_metric_card
+from components.cards import render_metric_card
 from services.orbit_service import compute_satellite_ground_track
 from services.tle_service import CATALOGS, get_space_objects, search_satellites
 
 
 def render_satellite_tracker() -> None:
     """Render the detailed satellite search, tracking, and ephemeris analysis page."""
-    st.markdown("## 📡 Satellite Tracking & Ephemeris Inspector")
+    st.markdown("## 🛰️ Satellite Tracker & Ephemeris Inspector")
     st.caption("Search across active constellations, inspect real orbital parameters, and visualize projected ground tracks.")
 
     # Catalog Filter & Search Row
@@ -49,18 +48,19 @@ def render_satellite_tracker() -> None:
         sat = next((o for o in filtered if o["name"] == selected_sat_name), filtered[0])
 
         # Telemetry panel
-        sat_panel_html = f"""
-<div class="panel-card">
-<div style="font-family: var(--font-main); font-size: 1.25rem; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: space-between;">
-<span>{sat['name']}</span>
-<span class="status-pill live"><span class="pulsing-dot"></span>TRACKED</span>
-</div>
-<div style="color: #94A3B8; font-size: 0.78rem; margin-top: 0.35rem;">
-NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Class: <b style="color: #00D4FF;">{sat['catalog'].upper()}</b>
-</div>
-</div>
-"""
-        render_html(sat_panel_html)
+        st.markdown(
+            f"""
+            <div class="cosmobits-card">
+                <div style="font-family: 'Orbitron', sans-serif; font-size: 1.25rem; color: #00F5D4; font-weight: 800;">
+                    {sat['name']}
+                </div>
+                <div style="color: #94A3B8; font-size: 0.8rem; margin-bottom: 0.8rem;">
+                    NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Class: <b style="color: #00D2FF;">{sat['catalog'].upper()}</b>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
         r1, r2 = st.columns(2)
         render_metric_card("Latitude", f"{sat['lat']:.3f}", "°", col=r1)
@@ -98,7 +98,7 @@ NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Cl
                     lat=df_track["lat"],
                     lon=df_track["lon"],
                     mode="lines",
-                    line=dict(width=2.5, color="#00D2FF"),
+                    line=dict(width=2.5, color="#00F5D4"),
                     name="Future Ground Track (2 Orbits)",
                     hoverinfo="skip",
                 )
@@ -110,7 +110,7 @@ NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Cl
                 lat=[sat["lat"]],
                 lon=[sat["lon"]],
                 mode="markers+text",
-                marker=dict(size=14, color="#38BDF8", symbol="circle", line=dict(width=2, color="#FFFFFF")),
+                marker=dict(size=14, color="#FF007F", symbol="circle", line=dict(width=2, color="#FFFFFF")),
                 text=[f"📍 {sat['name']}"],
                 textposition="top center",
                 name="Current Sub-Satellite Point",
@@ -122,11 +122,11 @@ NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Cl
         fig.update_geos(
             projection_type="equirectangular",
             showcoastlines=True,
-            coastlinecolor="rgba(0, 210, 255, 0.4)",
+            coastlinecolor="rgba(0, 245, 212, 0.4)",
             showland=True,
-            landcolor="#0A1020",
+            landcolor="#0B132B",
             showocean=True,
-            oceancolor="#03060F",
+            oceancolor="#040812",
             showcountries=True,
             countrycolor="rgba(255, 255, 255, 0.1)",
             bgcolor="rgba(0,0,0,0)",
@@ -134,7 +134,7 @@ NORAD ID: <b style="color: #FFF;">{sat.get('norad_id', 'Unavailable')}</b> · Cl
 
         fig.update_layout(
             template="plotly_dark",
-            paper_bgcolor="rgba(7, 11, 20, 0.8)",
+            paper_bgcolor="rgba(7, 11, 20, 0.6)",
             plot_bgcolor="rgba(0,0,0,0)",
             margin=dict(l=0, r=0, t=10, b=10),
             height=400,

@@ -1,4 +1,4 @@
-"""Cosmo Bites — TLE Ingestion & SGP4 Orbital Propagation Service.
+"""CosmoBits — TLE Ingestion & SGP4 Orbital Propagation Service.
 
 Fetches NORAD Two-Line Element sets from CelesTrak, maintains disk caches,
 and propagates positions in real-time using SGP4 into geodetic & ECEF frames.
@@ -28,7 +28,7 @@ from services.orbit_service import (
 
 CACHE_DIR = Path(__file__).resolve().parent.parent / ".astro_cache"
 CACHE_TTL_SEC = 45 * 60  # 45 minutes
-USER_AGENT = "CosmoBites/1.0 (educational & research; space-tracking platform)"
+USER_AGENT = "CosmoBits/1.0 (educational & research; space-tracking platform)"
 
 # Network availability circuit breaker
 _LAST_NETWORK_FAILURE_TIME = 0.0

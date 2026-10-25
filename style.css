@@ -1,823 +1,344 @@
 /* ==========================================================================
-   Cosmo Bites — Orbital Command Center Theme
-   Palette: Matte Space Black (#070A12), Dark Navy Panels (#0B1120, #080C16),
-   Crisp White Text (#FFFFFF, #CBD5E1), Cyan Blue Accents (#00D4FF)
-   Clean, simple, professional aerospace mission control design.
+   CosmoBits — Deep Space Mission Control Theme
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg-deep-space: #070A12;
-  --bg-panel: #0B1120;
-  --bg-panel-hover: #0F172A;
-  --bg-inner: #070C16;
-  --border-cyan-subtle: rgba(0, 212, 255, 0.22);
-  --border-cyan-active: #00D4FF;
-  --accent-cyan: #00D4FF;
-  --accent-sky: #38BDF8;
-  --accent-blue: #1D4ED8;
-  --text-white: #FFFFFF;
-  --text-slate: #CBD5E1;
-  --text-muted: #94A3B8;
-  --status-green: #10B981;
-  --status-amber: #F59E0B;
-  --status-red: #EF233C;
-  --font-main: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --bg-deep-space: #070B14;
+  --bg-card: rgba(15, 23, 42, 0.72);
+  --bg-card-hover: rgba(30, 41, 59, 0.85);
+  --border-glass: rgba(0, 245, 212, 0.16);
+  --border-glass-glow: rgba(0, 245, 212, 0.45);
+  --neon-cyan: #00F5D4;
+  --electric-blue: #00D2FF;
+  --cosmic-purple: #9D4EDD;
+  --plasma-pink: #FF007F;
+  --warning-amber: #FFB703;
+  --alert-red: #EF233C;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --glow-cyan: 0 0 20px rgba(0, 245, 212, 0.25);
+  --glow-blue: 0 0 20px rgba(0, 210, 255, 0.25);
+  --glow-purple: 0 0 20px rgba(157, 78, 221, 0.25);
 }
 
-/* ==========================================================================
-   Base Canvas (Matte Black, Zero Heavy Radial Gradients)
-   ========================================================================== */
+/* Background canvas */
 .stApp {
-  background-color: var(--bg-deep-space) !important;
-  background-image: none !important;
-  color: var(--text-white) !important;
-  font-family: var(--font-main) !important;
+  background: radial-gradient(circle at 15% 15%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
+              radial-gradient(circle at 85% 85%, rgba(157, 78, 221, 0.05) 0%, transparent 40%),
+              radial-gradient(circle at 50% 50%, rgba(7, 11, 20, 1) 0%, #03060B 100%) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Typography Defaults */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-main) !important;
-  color: var(--text-white) !important;
-  letter-spacing: -0.01em !important;
-  font-weight: 700 !important;
-}
-
-p, span, div, label {
-  font-family: var(--font-main);
-  color: var(--text-slate);
-}
-
-b, strong {
-  color: var(--text-white) !important;
-}
-
-/* Streamlit Container Gutters */
-.block-container {
-  padding-top: 1.25rem !important;
-  padding-bottom: 2rem !important;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
-  max-width: 100% !important;
-}
-
-/* ==========================================================================
-   Sidebar Styling (Matte Black, Organized Navigation Panel)
-   ========================================================================== */
-[data-testid="stSidebar"] {
-  background-color: #070A12 !important;
-  border-right: 1px solid rgba(0, 212, 255, 0.16) !important;
-}
-
-[data-testid="stSidebar"] .block-container {
-  padding: 1.25rem 1rem !important;
-}
-
-/* Sidebar Brand Header */
-.sidebar-brand-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.25rem 0.25rem 1.15rem 0.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 0.85rem;
-}
-
-.brand-name {
-  line-height: 1.05;
-}
-
-.brand-main {
-  font-family: var(--font-main);
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #FFFFFF;
-}
-
-.brand-sub {
-  font-family: var(--font-main);
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: #00D4FF;
-}
-
-.brand-menu-btn {
-  font-size: 1.4rem;
-  color: #FFFFFF;
-  cursor: pointer;
-  user-select: none;
-  opacity: 0.85;
-}
-
-/* Sidebar Navigation Items - Hide Radio Circle Completely */
-[data-testid="stSidebar"] [data-testid="stRadio"] > div {
-  gap: 3px !important;
-}
-
-[data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
-  display: none !important;
-}
-
-[data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
-  display: none !important;
-}
-
-[data-testid="stSidebar"] [data-testid="stRadio"] label {
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  border-radius: 8px !important;
-  padding: 0.5rem 0.85rem !important;
-  margin: 1px 0 !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-  color: #CBD5E1 !important;
-  font-size: 0.86rem !important;
-  font-weight: 500 !important;
-  display: flex !important;
-  align-items: center !important;
-  user-select: none !important;
-}
-
-[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #FFFFFF !important;
-}
-
-/* Active Navigation Item (Rounded border in Cyan Blue #00D4FF) */
-[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
-  background: rgba(0, 212, 255, 0.12) !important;
-  border: 1px solid #00D4FF !important;
-  border-radius: 8px !important;
-  color: #FFFFFF !important;
-  font-weight: 600 !important;
-}
-
-/* Sidebar Telemetry Feeds Card */
-.sidebar-feeds-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.18);
-  border-radius: 10px;
-  padding: 0.85rem;
-  margin-top: 1rem;
-}
-
-.feeds-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  margin-bottom: 0.65rem;
-  text-transform: capitalize;
-}
-
-.feed-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.74rem;
-  color: #CBD5E1;
-  padding: 0.25rem 0;
-}
-
-.feed-badge {
-  background: rgba(0, 212, 255, 0.12);
-  color: #00D4FF;
-  border: 1px solid rgba(0, 212, 255, 0.35);
-  padding: 2px 7px;
-  border-radius: 9999px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-/* Sidebar Next ISS Pass Card */
-.sidebar-iss-pass-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.28);
-  border-radius: 10px;
-  padding: 0.85rem;
-  margin-top: 0.85rem;
-}
-
-.pass-header {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.75rem;
-  color: #94A3B8;
-  margin-bottom: 0.3rem;
-}
-
-.pass-countdown {
-  font-family: var(--font-mono);
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #FFFFFF;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-}
-
-.pass-sub {
-  font-size: 0.7rem;
-  color: #94A3B8;
-  margin-top: 0.25rem;
-}
-
-/* ==========================================================================
-   Header Bar (White Headings, Live UTC Clock, Sync Button)
-   ========================================================================== */
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 0.65rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 0.85rem;
-}
-
-.header-title {
-  font-family: var(--font-main) !important;
-  font-size: 1.45rem !important;
-  font-weight: 700 !important;
-  color: #FFFFFF !important;
-  margin: 0 !important;
-  letter-spacing: 0.01em !important;
-}
-
-.header-subtitle {
-  font-size: 0.82rem !important;
-  color: #94A3B8 !important;
-  margin: 0.15rem 0 0 0 !important;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-}
-
-.live-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(0, 212, 255, 0.12);
-  border: 1px solid #00D4FF;
-  color: #00D4FF;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  font-size: 0.72rem;
-  font-weight: 700;
+/* Typography */
+h1, h2, h3 {
+  font-family: 'Orbitron', 'Space Grotesk', sans-serif !important;
   letter-spacing: 0.05em;
+  color: var(--text-primary);
 }
 
-.live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #00D4FF;
-}
-
-.utc-clock-badge {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #CBD5E1;
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  padding: 0.28rem 0.65rem;
-  border-radius: 6px;
-}
-
-.sync-button-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: rgba(0, 212, 255, 0.12);
-  border: 1px solid #00D4FF;
-  color: #FFFFFF;
-  padding: 0.28rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* ==========================================================================
-   Metadata Ribbon Bar
-   ========================================================================== */
-.ribbon-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.ribbon-pill {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: 6px;
-  padding: 0.4rem 0.85rem;
-  font-size: 0.75rem;
-  color: #CBD5E1;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-.ribbon-pill b {
-  color: #FFFFFF;
-}
-
-.ribbon-pill .cyan-highlight {
-  color: #00D4FF;
-  font-weight: 700;
-}
-
-/* ==========================================================================
-   Top 4 KPI Telemetry Cards
-   ========================================================================== */
-.kpi-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.85rem;
-  margin-bottom: 1rem;
-}
-
-.kpi-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  position: relative;
-  transition: border-color 0.15s ease;
-}
-
-.kpi-card:hover {
-  border-color: #00D4FF;
-}
-
-.kpi-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 0.4rem;
-}
-
-.kpi-title {
-  font-size: 0.78rem;
-  color: #94A3B8;
-  font-weight: 600;
-}
-
-.kpi-icon {
-  font-size: 1.15rem;
-  opacity: 0.85;
-}
-
-.kpi-value-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-}
-
-.kpi-value {
-  font-family: var(--font-mono);
-  font-size: 1.65rem;
+h1 {
+  background: linear-gradient(135deg, #FFFFFF 20%, var(--neon-cyan) 60%, var(--electric-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-weight: 800;
-  color: #FFFFFF;
-  line-height: 1;
+  text-shadow: 0 0 35px rgba(0, 245, 212, 0.2);
 }
 
-.kpi-unit {
-  font-size: 0.82rem;
-  color: #94A3B8;
-  font-weight: 500;
-}
-
-.kpi-subtext {
-  font-size: 0.72rem;
-  color: #64748B;
-  margin-top: 0.35rem;
-}
-
-/* ==========================================================================
-   Panels, Cards & Mission Control Containers
-   ========================================================================== */
-.panel-card,
-.cosmobits-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  margin-bottom: 0.85rem;
+/* Custom Glassmorphic Cards */
+.cosmobits-card,
+.astrolink-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  transition: border-color 0.15s ease;
+  overflow: hidden;
 }
 
-.panel-card:hover,
-.cosmobits-card:hover {
-  border-color: #00D4FF;
+.cosmobits-card:hover,
+.astrolink-card:hover {
+  border-color: var(--border-glass-glow);
+  box-shadow: 0 10px 40px -10px rgba(0, 245, 212, 0.28);
+  transform: translateY(-2px);
 }
 
-.panel-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
+.cosmobits-card::before,
+.astrolink-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--electric-blue), transparent);
+  opacity: 0.7;
 }
 
-.panel-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-/* Filter pills above Globe */
-.filter-pills-row {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 0.76rem;
-  color: #94A3B8;
-}
-
-.filter-pill {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  transition: color 0.15s ease;
-}
-
-.filter-pill.active {
-  color: #FFFFFF;
-  font-weight: 700;
-}
-
-.dot-all { color: #00D4FF; }
-.dot-sat { color: #38BDF8; }
-.dot-station { color: #60A5FA; }
-.dot-debris { color: #818CF8; }
-.dot-iss { color: #F59E0B; }
-.dot-active { color: #10B981; }
-
-/* ==========================================================================
-   Telemetry Grids (2x3 and 3x3 Cards)
-   ========================================================================== */
-.telem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem 1rem;
-  margin: 0.85rem 0 1rem 0;
-  background: #070C16;
-  border: 1px solid rgba(0, 212, 255, 0.16);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
-}
-
-.telem-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem 1rem;
-  margin: 0.85rem 0 1rem 0;
-  background: #070C16;
-  border: 1px solid rgba(0, 212, 255, 0.16);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
-}
-
-.telem-cell-label {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #64748B;
-  font-weight: 600;
-}
-
-.telem-cell-val {
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  margin-top: 2px;
-}
-
-.telem-cell-val.cyan {
-  color: #00D4FF;
-}
-
-.telem-cell-val.green {
-  color: #10B981;
-}
-
-.telem-cell-val.amber {
-  color: #F59E0B;
-}
-
-/* Single Telemetry Metric Tile */
+/* Telemetry Metric Tile */
 .metric-tile {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
-  margin-bottom: 0.65rem;
-  transition: border-color 0.15s ease;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s ease;
 }
 
 .metric-tile:hover {
-  border-color: #00D4FF;
+  border-color: rgba(0, 245, 212, 0.4);
+  background: rgba(20, 30, 55, 0.7);
 }
 
 .metric-label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #94A3B8;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
   font-weight: 600;
 }
 
 .metric-value {
-  font-family: var(--font-mono);
-  font-size: 1.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #FFFFFF;
-  margin-top: 2px;
 }
 
 .metric-unit {
-  font-size: 0.8rem;
-  color: #00D4FF;
-  margin-left: 3px;
+  font-size: 0.85rem;
+  color: var(--neon-cyan);
+  margin-left: 0.25rem;
 }
 
 .metric-sub {
-  font-size: 0.7rem;
-  color: #64748B;
-  margin-top: 3px;
-}
-
-/* ==========================================================================
-   Bottom Row Cards
-   ========================================================================== */
-.bottom-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.85rem;
-}
-
-.bottom-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  min-height: 195px;
-}
-
-.bottom-card-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #FFFFFF;
-  margin-bottom: 0.75rem;
-}
-
-/* Weather Overview */
-.weather-split {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.weather-radar-icon {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, #070C16 75%);
-  border: 1px solid rgba(0, 212, 255, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.75rem;
-}
-
-.weather-stats {
-  flex: 1;
-  font-size: 0.78rem;
-  line-height: 1.6;
-  color: #CBD5E1;
-}
-
-.weather-stat-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 1px 0;
-}
-
-.weather-stat-label {
-  color: #94A3B8;
-}
-
-.weather-stat-val {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: #FFFFFF;
-}
-
-/* Active Alerts list */
-.alert-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 0.45rem 0;
-}
-
-.alert-item:last-child {
-  border-bottom: none;
-}
-
-.alert-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-.alert-sub {
-  font-size: 0.7rem;
-  color: #64748B;
-  margin-top: 2px;
-}
-
-.alert-time {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  color: #94A3B8;
-}
-
-/* Top Active Objects Table */
-.active-objects-list {
-  font-size: 0.78rem;
-  line-height: 1.8;
-}
-
-.object-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.25rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-.object-row:last-child {
-  border-bottom: none;
-}
-
-.object-name {
-  color: #FFFFFF;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.object-norad {
-  font-family: var(--font-mono);
-  color: #64748B;
   font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
 }
 
-.object-alt {
-  font-family: var(--font-mono);
-  color: #00D4FF;
-  font-weight: 700;
-}
-
-/* Status Pill Badges */
+/* Status Badges */
 .status-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
   border-radius: 9999px;
-  font-size: 0.72rem;
-  font-weight: 700;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .status-pill.live {
-  background: rgba(0, 212, 255, 0.12);
-  color: #00D4FF;
-  border: 1px solid #00D4FF;
+  background: rgba(0, 245, 212, 0.15);
+  color: var(--neon-cyan);
+  border: 1px solid rgba(0, 245, 212, 0.4);
 }
 
 .status-pill.propagated {
-  background: rgba(148, 163, 184, 0.12);
-  color: #CBD5E1;
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(0, 210, 255, 0.15);
+  color: var(--electric-blue);
+  border: 1px solid rgba(0, 210, 255, 0.4);
+}
+
+.status-pill.cached {
+  background: rgba(255, 183, 3, 0.15);
+  color: var(--warning-amber);
+  border: 1px solid rgba(255, 183, 3, 0.4);
 }
 
 .status-pill.alert {
   background: rgba(239, 35, 60, 0.15);
-  color: #EF233C;
-  border: 1px solid #EF233C;
-}
-
-.status-pill.cached {
-  background: rgba(245, 158, 11, 0.12);
-  color: #F59E0B;
-  border: 1px solid #F59E0B;
+  color: var(--alert-red);
+  border: 1px solid rgba(239, 35, 60, 0.4);
 }
 
 .pulsing-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulse-glow 2s infinite;
 }
 
-/* Navigation Card */
-.nav-card {
-  background: #0B1120;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  margin-bottom: 0.85rem;
-  transition: border-color 0.15s ease;
+@keyframes pulse-glow {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
 }
 
-.nav-card:hover {
-  border-color: #00D4FF;
+/* Top Navigation Bar */
+.mission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: rgba(10, 16, 31, 0.85);
+  border-bottom: 1px solid var(--border-glass);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
 }
 
-.nav-card-icon {
-  font-size: 1.5rem;
-  margin-bottom: 0.4rem;
+/* CosmoBits Top-Right Header Logo Pill */
+.cosmobits-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, rgba(0, 245, 212, 0.12), rgba(157, 78, 221, 0.16));
+  border: 1px solid rgba(0, 245, 212, 0.38);
+  padding: 0.35rem 0.85rem 0.35rem 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.18);
+  transition: all 0.25s ease;
+  user-select: none;
 }
 
-.nav-card-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #FFFFFF;
+.cosmobits-header-logo:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 24px rgba(0, 245, 212, 0.4);
+  transform: translateY(-1px);
 }
 
-.nav-card-desc {
-  font-size: 0.78rem;
-  color: #94A3B8;
-  margin-top: 0.25rem;
+/* CosmoBits Fixed Floating Top-Right Corner Badge */
+.cosmobits-top-right-badge {
+  position: fixed;
+  top: 14px;
+  right: 58px;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(11, 19, 43, 0.88);
+  border: 1px solid rgba(0, 245, 212, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 4px 12px 4px 7px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(0, 245, 212, 0.22);
+  cursor: default;
+  user-select: none;
+  transition: all 0.25s ease;
 }
 
-/* ==========================================================================
-   Form Controls, Inputs, and Buttons
-   ========================================================================== */
+.cosmobits-top-right-badge:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 25px rgba(0, 245, 212, 0.5);
+  transform: translateY(-1px);
+}
+
+.cosmobits-top-right-badge .badge-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 6px rgba(0, 245, 212, 0.6));
+  transition: transform 0.3s ease;
+}
+
+.cosmobits-top-right-badge:hover .badge-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgba(0, 245, 212, 0.9));
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+  background-color: #080D1A !important;
+  border-right: 1px solid rgba(0, 245, 212, 0.12) !important;
+}
+
+[data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2 {
+  font-size: 1.1rem !important;
+}
+
+/* Streamlit Button Styling */
 div.stButton > button {
-  background: #0B1120 !important;
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.18), rgba(157, 78, 221, 0.18)) !important;
   color: #FFFFFF !important;
-  border: 1px solid #00D4FF !important;
-  border-radius: 7px !important;
-  padding: 0.45rem 1rem !important;
+  border: 1px solid rgba(0, 245, 212, 0.35) !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1rem !important;
   font-weight: 600 !important;
-  font-family: var(--font-main) !important;
-  letter-spacing: 0.02em !important;
-  transition: all 0.15s ease !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  letter-spacing: 0.04em !important;
+  transition: all 0.2s ease !important;
 }
 
 div.stButton > button:hover {
-  background: rgba(0, 212, 255, 0.15) !important;
-  border-color: #00D4FF !important;
-  color: #FFFFFF !important;
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.4), rgba(157, 78, 221, 0.4)) !important;
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.35) !important;
+  transform: translateY(-1px) !important;
 }
 
-/* Streamlit Native Selectbox & Text Input */
-div[data-baseweb="select"] > div,
-input.stTextInput,
-.stNumberInput input {
-  background-color: #070C16 !important;
-  border: 1px solid rgba(0, 212, 255, 0.22) !important;
-  color: #FFFFFF !important;
-  border-radius: 7px !important;
-  font-family: var(--font-main) !important;
+/* Quick Nav Cards */
+.nav-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.25s ease;
+  height: 100%;
 }
 
-div[data-baseweb="select"] > div:hover,
-input.stTextInput:focus,
-.stNumberInput input:focus {
-  border-color: #00D4FF !important;
+.nav-card:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(22, 33, 60, 0.85);
+  box-shadow: 0 4px 20px rgba(0, 245, 212, 0.2);
+  transform: translateY(-3px);
 }
 
-/* Responsive Grid Fallbacks */
-@media (max-width: 1024px) {
-  .kpi-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .bottom-grid {
-    grid-template-columns: 1fr;
-  }
+.nav-card-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.nav-card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #FFFFFF;
+  margin-bottom: 0.25rem;
+}
+
+.nav-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Plotly Chart Wrapper */
+.plotly-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #070B14;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00F5D4;
 }

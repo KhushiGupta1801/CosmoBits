@@ -35,7 +35,7 @@ class TestServices(unittest.TestCase):
 
     def test_query_ai_assistant_offline(self):
         answer, provider = query_ai_assistant("Hello")
-        self.assertIn("Cosmo Bites", provider)
+        self.assertIn("CosmoBits", provider)
 
 
 if __name__ == "__main__":

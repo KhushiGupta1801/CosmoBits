@@ -1,4 +1,4 @@
-"""Cosmo Bites — Orbital Analytics & Fleet Statistical Profiler."""
+"""CosmoBits — Orbital Analytics & Fleet Statistical Profiler."""
 from __future__ import annotations
 
 import pandas as pd
@@ -12,7 +12,7 @@ from services.tle_service import CATALOGS, get_space_objects
 
 def render_orbit_analytics() -> None:
     """Render interactive statistical charts and orbital parameter distributions."""
-    st.markdown("## 📊 Orbit Analysis & Fleet Dynamics")
+    st.markdown("## 📊 Orbit Analytics & Fleet Dynamics")
     st.caption("Empirical distributions of orbital parameters across active satellite constellations.")
 
     # Load multi-group dataset
@@ -63,10 +63,10 @@ def render_orbit_analytics() -> None:
         hover_data={"alt_km": ":.1f km", "speed_kms": ":.2f km/s", "inclination_deg": True, "catalog": True},
         labels={"alt_km": "Altitude (km)", "speed_kms": "Orbital Speed (km/s)"},
         color_discrete_map={
-            "stations": "#00D2FF",
-            "visual": "#38BDF8",
-            "weather": "#60A5FA",
-            "gps-ops": "#818CF8",
+            "stations": "#00F5D4",
+            "visual": "#00D2FF",
+            "weather": "#4DD0E1",
+            "gps-ops": "#9D4EDD",
             "science": "#34D399",
             "last-30-days": "#FFB703",
             "analyst": "#EF233C",
@@ -75,8 +75,8 @@ def render_orbit_analytics() -> None:
     )
     fig_vv.update_layout(
         template="plotly_dark",
-        paper_bgcolor="#0A0F1D",
-        plot_bgcolor="#0F172A",
+        paper_bgcolor="rgba(7, 11, 20, 0.6)",
+        plot_bgcolor="rgba(15, 23, 42, 0.4)",
         height=420,
         margin=dict(l=20, r=20, t=20, b=20),
     )
@@ -88,27 +88,17 @@ def render_orbit_analytics() -> None:
     with col_alt:
         st.markdown("### 📈 Altitude Distribution")
         fig_alt = px.histogram(
-            df[df["alt_km"] < 2500],
+            df[df["alt_km"] < 2500],  # Zoom to LEO cluster
             x="alt_km",
             nbins=35,
             color="catalog",
             labels={"alt_km": "Altitude (km)", "count": "Satellite Count"},
             title="LEO Altitude Clustering (<2,500 km)",
-            color_discrete_map={
-                "stations": "#00D2FF",
-                "visual": "#38BDF8",
-                "weather": "#60A5FA",
-                "gps-ops": "#818CF8",
-                "science": "#34D399",
-                "last-30-days": "#FFB703",
-                "analyst": "#EF233C",
-                "demo": "#94A3B8",
-            },
         )
         fig_alt.update_layout(
             template="plotly_dark",
-            paper_bgcolor="#0A0F1D",
-            plot_bgcolor="#0F172A",
+            paper_bgcolor="rgba(7, 11, 20, 0.6)",
+            plot_bgcolor="rgba(15, 23, 42, 0.4)",
             height=360,
             margin=dict(l=10, r=10, t=40, b=10),
             showlegend=False,
@@ -124,21 +114,11 @@ def render_orbit_analytics() -> None:
             color="catalog",
             labels={"inclination_deg": "Inclination (°)", "count": "Satellite Count"},
             title="Clustering at Key Orbit Angles (ISS 51.6°, SSO ~98°)",
-            color_discrete_map={
-                "stations": "#00D2FF",
-                "visual": "#38BDF8",
-                "weather": "#60A5FA",
-                "gps-ops": "#818CF8",
-                "science": "#34D399",
-                "last-30-days": "#FFB703",
-                "analyst": "#EF233C",
-                "demo": "#94A3B8",
-            },
         )
         fig_inc.update_layout(
             template="plotly_dark",
-            paper_bgcolor="#0A0F1D",
-            plot_bgcolor="#0F172A",
+            paper_bgcolor="rgba(7, 11, 20, 0.6)",
+            plot_bgcolor="rgba(15, 23, 42, 0.4)",
             height=360,
             margin=dict(l=10, r=10, t=40, b=10),
             showlegend=False,
@@ -148,27 +128,17 @@ def render_orbit_analytics() -> None:
     # Row 3: Orbital Period Distribution
     st.markdown("### ⏱️ Orbital Period Distribution")
     fig_period = px.box(
-        df[df["period_min"] < 200],
+        df[df["period_min"] < 200],  # Filter out GEO for boxplot readability
         x="catalog",
         y="period_min",
         color="catalog",
         points="all",
         labels={"period_min": "Orbital Period (minutes)", "catalog": "Mission Catalog"},
-        color_discrete_map={
-            "stations": "#00D2FF",
-            "visual": "#38BDF8",
-            "weather": "#60A5FA",
-            "gps-ops": "#818CF8",
-            "science": "#34D399",
-            "last-30-days": "#FFB703",
-            "analyst": "#EF233C",
-            "demo": "#94A3B8",
-        },
     )
     fig_period.update_layout(
         template="plotly_dark",
-        paper_bgcolor="#0A0F1D",
-        plot_bgcolor="#0F172A",
+        paper_bgcolor="rgba(7, 11, 20, 0.6)",
+        plot_bgcolor="rgba(15, 23, 42, 0.4)",
         height=380,
         margin=dict(l=20, r=20, t=20, b=20),
         showlegend=False,

@@ -1,7 +1,6 @@
-"""Cosmo Bites — Dedicated International Space Station (ISS) Tracking Page."""
+"""CosmoBits — Dedicated International Space Station (ISS) Tracking Page."""
 from __future__ import annotations
 
-import textwrap
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -128,78 +127,39 @@ def render_iss_tracker() -> None:
         st.markdown("### 📡 Telemetry State")
 
         pill_html = render_status_pill(iss["status"], "live" if "LIVE" in iss["status"] else "prop")
-        lat_dir = "N" if iss["lat"] >= 0 else "S"
-        lon_dir = "E" if iss["lon"] >= 0 else "W"
-        spd = iss.get("speed_kms", 7.66)
-        footprint = iss.get("footprint_km", 4500)
-        vis = iss.get("visibility", "Nominal")
-
-        telemetry_card_html = f"""
-<div class="panel-card">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
-<div>
-<div style="font-family: var(--font-main); font-size: 1.15rem; color: #FFFFFF; font-weight: 700;">
-ZARYA (ISS)
-</div>
-<div style="font-size: 0.74rem; color: #94A3B8;">
-NORAD ID: <b style="color: #FFF;">25544</b> · Source: <b style="color: #00D4FF;">{iss['source']}</b>
-</div>
-</div>
-<div>{pill_html}</div>
-</div>
-
-<div class="telem-grid" style="margin: 0.5rem 0;">
-<div>
-<div class="telem-cell-label">LATITUDE</div>
-<div class="telem-cell-val cyan">{abs(iss['lat']):.4f}° {lat_dir}</div>
-</div>
-<div>
-<div class="telem-cell-label">LONGITUDE</div>
-<div class="telem-cell-val cyan">{abs(iss['lon']):.4f}° {lon_dir}</div>
-</div>
-<div>
-<div class="telem-cell-label">ALTITUDE</div>
-<div class="telem-cell-val">{iss['alt_km']:.1f} km</div>
-</div>
-<div>
-<div class="telem-cell-label">VELOCITY</div>
-<div class="telem-cell-val">{spd:.2f} km/s</div>
-</div>
-<div>
-<div class="telem-cell-label">FOOTPRINT</div>
-<div class="telem-cell-val">{footprint:,.0f} km</div>
-</div>
-<div>
-<div class="telem-cell-label">SOLAR STATE</div>
-<div class="telem-cell-val amber">{vis}</div>
-</div>
-</div>
-
-<div style="font-family: var(--font-mono); font-size: 0.7rem; color: #94A3B8; margin-top: 0.45rem; padding-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.06);">
-EPOCH: <span style="color: #CBD5E1;">{iss['epoch_utc']}</span>
-</div>
-</div>
-"""
-        from components.cards import render_html
-        render_html(telemetry_card_html)
+        st.markdown(
+            f"""
+            <div class="cosmobits-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                    <span style="font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #FFFFFF; font-weight: 700;">
+                        ZARYA (ISS)
+                    </span>
+                    {pill_html}
+                </div>
+                <div style="font-size: 0.75rem; color: #94A3B8; margin-bottom: 0.75rem;">
+                    NORAD ID: <b style="color: #FFF;">25544</b> · Source: <b style="color: #00D2FF;">{iss['source']}</b>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 1.8;">
+                    <div>LAT: <span style="color: #00F5D4;">{iss['lat']:.4f}°</span></div>
+                    <div>LON: <span style="color: #00F5D4;">{iss['lon']:.4f}°</span></div>
+                    <div>ALTITUDE: <span style="color: #FFF;">{iss['alt_km']:.1f} km</span></div>
+                    <div>GROUND FOOTPRINT: <span style="color: #FFF;">{iss.get('footprint_km', 4500):,.0f} km</span></div>
+                    <div>DAY/NIGHT STATE: <span style="color: #FFB703;">{iss.get('visibility', 'Nominal')}</span></div>
+                    <div>EPOCH: <span style="color: #94A3B8; font-size: 0.75rem;">{iss['epoch_utc']}</span></div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
         # Crew Onboard
         st.markdown("### 👨‍🚀 Humans In Space")
         iss_crew = [p for p in crew if p.get("craft") == "ISS"]
         other_crew = [p for p in crew if p.get("craft") != "ISS"]
 
-        crew_items_html = ""
+        st.markdown(f"**{len(iss_crew)}** onboard ISS · **{len(crew)}** total in orbit")
         for p in iss_crew[:5]:
-            crew_items_html += f'<div style="padding: 3px 0; font-size: 0.8rem; color: #CBD5E1;">🚀 <b style="color: #FFF;">{p["name"]}</b> <span style="color: #00D4FF; font-size: 0.72rem;">(ISS)</span></div>'
-        for p in other_crew[:3]:
-            crew_items_html += f'<div style="padding: 3px 0; font-size: 0.8rem; color: #CBD5E1;">🛸 <b style="color: #FFF;">{p["name"]}</b> <span style="color: #94A3B8; font-size: 0.72rem;">({p.get("craft")})</span></div>'
-
-        crew_card_html = f"""
-<div class="panel-card">
-<div style="font-size: 0.78rem; font-weight: 700; color: #00D4FF; margin-bottom: 0.45rem;">
-ORBITAL EXPEDITION CREW ({len(iss_crew)} ISS · {len(crew)} Total)
-</div>
-{crew_items_html}
-</div>
-"""
-        render_html(crew_card_html)
+            st.markdown(f"- 🚀 **{p['name']}** *(ISS)*")
+        if other_crew:
+            for p in other_crew[:3]:
+                st.markdown(f"- 🛸 **{p['name']}** *({p.get('craft')})*")

@@ -1,4 +1,4 @@
-"""Cosmo Bites — NOAA Space Weather Prediction Center (SWPC) Service.
+"""CosmoBits — NOAA Space Weather Prediction Center (SWPC) Service.
 
 Fetches solar activity, geomagnetic storm indices (Kp-Index), solar wind plasma,
 and radio flux, assessing operational impacts on LEO satellites and constellations.
@@ -10,7 +10,7 @@ import urllib.request
 from datetime import datetime, timezone
 from typing import Any
 
-USER_AGENT = "Cosmo Bites/1.0 (NOAA-SWPC-Client; educational)"
+USER_AGENT = "CosmoBits/1.0 (NOAA-SWPC-Client; educational)"
 
 
 def get_space_weather_data() -> dict[str, Any]:

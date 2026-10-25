@@ -1,4 +1,4 @@
-"""Cosmo Bites — Ground Observer Satellite Pass Predictor."""
+"""CosmoBits — Ground Observer Satellite Pass Predictor."""
 from __future__ import annotations
 
 from datetime import datetime, timezone
