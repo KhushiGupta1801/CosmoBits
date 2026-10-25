@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <linearGradient id="cosmoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5D4" />
+      <stop offset="50%" stop-color="#00D2FF" />
+      <stop offset="100%" stop-color="#9D4EDD" />
+    </linearGradient>
+    <linearGradient id="orbitGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9D4EDD" />
+      <stop offset="70%" stop-color="#00D2FF" />
+      <stop offset="100%" stop-color="#00F5D4" />
+    </linearGradient>
+    <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A101D" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+    <linearGradient id="cubeRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141E33" />
+      <stop offset="100%" stop-color="#0B132B" />
+    </linearGradient>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Deep space subtle backdrop circle -->
+  <circle cx="60" cy="60" r="54" fill="rgba(11, 19, 43, 0.75)" stroke="rgba(0, 245, 212, 0.25)" stroke-width="1.5" />
+
+  <!-- Constellation guide lines & binary micro-bits -->
+  <line x1="32" y1="32" x2="44" y2="44" stroke="#00F5D4" stroke-width="0.75" stroke-dasharray="2 3" opacity="0.4" />
+  <line x1="88" y1="30" x2="76" y2="44" stroke="#00D2FF" stroke-width="0.75" stroke-dasharray="2 3" opacity="0.4" />
+  <line x1="30" y1="88" x2="44" y2="76" stroke="#9D4EDD" stroke-width="0.75" stroke-dasharray="2 3" opacity="0.4" />
+  <circle cx="32" cy="32" r="1.5" fill="#00F5D4" opacity="0.8" />
+  <circle cx="88" cy="30" r="1.5" fill="#00D2FF" opacity="0.8" />
+  <circle cx="30" cy="88" r="1.5" fill="#9D4EDD" opacity="0.8" />
+  <circle cx="92" cy="85" r="1.5" fill="#00F5D4" opacity="0.8" />
+
+  <!-- Outer Orbit 1 (Neon Cyan / Blue) -->
+  <ellipse cx="60" cy="60" rx="46" ry="18" fill="none" stroke="url(#cosmoGrad)" stroke-width="2.2" transform="rotate(-28 60 60)" stroke-dasharray="140 18" stroke-linecap="round" filter="url(#neonGlow)" />
+
+  <!-- Outer Orbit 2 (Cosmic Purple / Cyan) -->
+  <ellipse cx="60" cy="60" rx="44" ry="16" fill="none" stroke="url(#orbitGrad2)" stroke-width="1.6" transform="rotate(40 60 60)" stroke-dasharray="130 16" stroke-linecap="round" opacity="0.75" />
+
+  <!-- Central 3D Cyber Cube (The Cosmo-Bit) -->
+  <polygon points="60,34 78,44 60,54 42,44" fill="url(#cubeTop)" stroke="#00F5D4" stroke-width="1.5" stroke-linejoin="round" />
+  <polygon points="42,44 60,54 60,76 42,66" fill="url(#cubeLeft)" stroke="#00D2FF" stroke-width="1.5" stroke-linejoin="round" />
+  <polygon points="60,54 78,44 78,66 60,76" fill="url(#cubeRight)" stroke="#9D4EDD" stroke-width="1.5" stroke-linejoin="round" />
+
+  <!-- Cube Interior Circuit Traces -->
+  <line x1="60" y1="36" x2="60" y2="52" stroke="#00F5D4" stroke-width="1" opacity="0.6" />
+  <line x1="45" y1="46" x2="58" y2="53" stroke="#00D2FF" stroke-width="1" opacity="0.6" />
+  <line x1="75" y1="46" x2="62" y2="53" stroke="#9D4EDD" stroke-width="1" opacity="0.6" />
+
+  <!-- Core Pulsing Star / Bit Nucleus -->
+  <line x1="60" y1="47" x2="60" y2="63" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" filter="url(#intenseGlow)" />
+  <line x1="52" y1="55" x2="68" y2="55" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" filter="url(#intenseGlow)" />
+  <circle cx="60" cy="55" r="3.5" fill="#FFFFFF" filter="url(#intenseGlow)" />
+  <circle cx="60" cy="55" r="1.8" fill="#00F5D4" />
+
+  <!-- Orbiting Satellites / Digital Bits -->
+  <g transform="translate(94, 42)">
+    <rect x="-4" y="-4" width="8" height="8" rx="2" fill="#00F5D4" stroke="#FFFFFF" stroke-width="1" filter="url(#intenseGlow)" />
+    <line x1="-7" y1="0" x2="-4" y2="0" stroke="#00F5D4" stroke-width="1.5" />
+    <line x1="4" y1="0" x2="7" y2="0" stroke="#00F5D4" stroke-width="1.5" />
+  </g>
+
+  <circle cx="26" cy="74" r="3.5" fill="#00D2FF" stroke="#FFFFFF" stroke-width="0.8" filter="url(#neonGlow)" />
+  <circle cx="78" cy="88" r="2.8" fill="#9D4EDD" stroke="#FFFFFF" stroke-width="0.6" filter="url(#neonGlow)" />
+</svg>

@@ -1,7 +1,7 @@
-Flask>=3.0,<4.0
-flask-cors>=5.0.0,<6.0.0
-sgp4>=2.20,<3.0
-requests>=2.31,<3.0
-redis>=5.0,<7.0
-concurrent-log-handler>=0.9.25,<1.0
-gunicorn>=22.0,<24.0
+streamlit>=1.35.0
+plotly>=5.18.0
+sgp4>=2.23
+pandas>=2.0.0
+numpy>=1.24.0
+requests>=2.31.0
+python-dotenv>=1.0.0

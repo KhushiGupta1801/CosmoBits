@@ -1,0 +1,25 @@
+==============================================================================
+   COSMO BITES — WINDOWS QUICK START GUIDE
+==============================================================================
+
+[HINDI] Windows Laptop Me Chalane Ka Tarika:
+---------------------------------------------
+1. Is ZIP folder ko extract karein (Right-click -> Extract All...).
+2. Agar aapke laptop me Python installed nahi hai:
+   - https://www.python.org/downloads/ par jayein aur Python 3.11 ya 3.12 download karein.
+   - Installer open karein aur sabse pehle niche diya gaya checkbox:
+     [✓] "Add python.exe to PATH"
+     ZAROOR TICK KAREIN, fir "Install Now" par click karein.
+3. Ab folder me jakar "run_cosmobites.bat" par double-click karein!
+   - Yeh automatically saare zaroori packages install kar dega.
+   - Browser me http://localhost:8501 par Cosmo Bites Mission Control open ho jayega.
+
+[ENGLISH] Quick Start on Windows:
+---------------------------------------------
+1. Extract this ZIP archive to a folder.
+2. Ensure Python 3.10+ is installed with "Add python.exe to PATH" enabled.
+3. Double-click "run_cosmobites.bat".
+4. The dashboard will automatically launch in your default web browser at:
+   http://localhost:8501
+
+==============================================================================

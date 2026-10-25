@@ -1,0 +1,169 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cosmo Bites | Space Dashboard</title>
+
+    <meta
+        name="description"
+        content="Cosmo Bites orbital mission planning dashboard."
+    >
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <a href="#dashboard" class="logo">✦ Cosmo Bites</a>
+
+        <nav>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#simulation">Simulation</a>
+            <a href="#risk">Risk Analysis</a>
+        </nav>
+
+        <span class="status">
+            <span class="status-dot"></span>
+            Demo Dashboard
+        </span>
+    </header>
+
+    <main class="container">
+
+        <section class="hero" id="dashboard">
+            <p class="eyebrow">SPACE SITUATIONAL AWARENESS</p>
+
+            <h1>
+                Explore Space.<br>
+                <span>Understand the Orbit.</span>
+            </h1>
+
+            <p class="hero-copy">
+                Configure a sample mission and review its
+                demonstration results.
+            </p>
+        </section>
+
+        <section class="grid">
+
+            <article class="card" id="simulation">
+
+                <p class="eyebrow">MISSION SETUP</p>
+                <h2>Mission Configuration</h2>
+
+                <label for="altitude">
+                    Orbital Altitude
+                    <strong id="altitudeValue">550 km</strong>
+                </label>
+
+                <input
+                    type="range"
+                    id="altitude"
+                    min="200"
+                    max="2000"
+                    step="10"
+                    value="550"
+                >
+
+                <label for="inclination">
+                    Inclination
+                    <strong id="inclinationValue">45°</strong>
+                </label>
+
+                <input
+                    type="range"
+                    id="inclination"
+                    min="0"
+                    max="180"
+                    value="45"
+                >
+
+                <label for="duration">
+                    Simulation Duration
+                </label>
+
+                <select id="duration">
+                    <option value="1">1 Hour</option>
+                    <option value="6">6 Hours</option>
+                    <option value="12">12 Hours</option>
+                    <option value="24" selected>24 Hours</option>
+                </select>
+
+                <button id="simulateBtn" type="button">
+                    Run Demo Simulation
+                </button>
+
+                <p class="fine-print">
+                    Educational prototype. Real collision risk
+                    is not calculated.
+                </p>
+
+            </article>
+
+            <article class="card" id="risk">
+
+                <p class="eyebrow">ANALYSIS OUTPUT</p>
+                <h2>Risk Analysis</h2>
+
+                <div class="result-box">
+                    <p class="muted">Simulation Status</p>
+                    <strong id="simulationStatus">
+                        Not Started
+                    </strong>
+                </div>
+
+                <div class="metric-row">
+
+                    <div>
+                        <p class="muted">Objects Analyzed</p>
+                        <strong id="objectsAnalyzed">0</strong>
+                    </div>
+
+                    <div>
+                        <p class="muted">Risk Assessment</p>
+                        <strong id="riskResult">
+                            Not Calculated
+                        </strong>
+                    </div>
+
+                </div>
+
+                <p
+                    id="simulationMessage"
+                    class="message"
+                    aria-live="polite"
+                >
+                    Configure a mission to begin.
+                </p>
+
+            </article>
+
+        </section>
+
+        <section class="card log-card">
+
+            <p class="eyebrow">ACTIVITY</p>
+            <h2>Simulation Log</h2>
+
+            <ul id="eventLog" aria-live="polite">
+                <li>Cosmo Bites dashboard initialized.</li>
+            </ul>
+
+        </section>
+
+        <footer>
+            <span>✦ Cosmo Bites</span>
+            <span>Educational Prototype</span>
+        </footer>
+
+    </main>
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
+```
